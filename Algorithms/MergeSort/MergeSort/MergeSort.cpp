@@ -2,10 +2,24 @@
 //
 
 #include <iostream>
+#include "MergeSort.h"
+
+void mergeFunc(int arr[], int low, int mid, int high, int temp[]) {
+	
+}
+
+void mergeSortInternal(int arr[], int low, int high, int temp[]) {
+
+}
+
+void mergeSort(int arr[], int arrSize) {
+
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Merge Sort\n";
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
