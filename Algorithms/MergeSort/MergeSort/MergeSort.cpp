@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include <algorithm>
+#include <random>
 
 void mergeFunc(int arr[], int low, int mid, int high, int temp[]) {
 
@@ -75,18 +77,34 @@ int main()
 {
     std::cout << "Merge Sort\n";
 
-	int arr[] = { 5, 4, 3, 2, 1 };
-    std::cout << "Before: ";
-    for (int i: arr ) {
-        std::cout << i << ' ';
+    const int size = 100000;
+    int arr[size];
+
+    // Initialize the array with arr from 1 to 100,000
+    for (int i = 0; i < size; ++i) {
+        arr[i] = i + 1;
     }
-    std::cout << '\n' << "After: ";
-	mergeSort(arr, 5);
-	for (int i : arr)
-	{
-				std::cout << i << ' ';
+
+    // Seed a random number generator
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    // Shuffle the array
+    std::shuffle(arr, arr + size, g);
+
+    //Sort the array
+    std::cout << "First one hundred values before: ";
+    for (int i = 0; i < 100; ++i) {
+        std::cout << arr[i] << ", ";
+    }
+    std::cout << '\n' << "First one hundred values after: ";
+	mergeSort(arr, size);
+	for (int i = 0; i < 100; ++i) {
+		std::cout << arr[i] << ", ";
 	}
 	std::cout << '\n';
+
+	delete[] arr;
 	return 0;
 }
 
