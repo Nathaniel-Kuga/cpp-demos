@@ -2,24 +2,92 @@
 //
 
 #include <iostream>
-#include "MergeSort.h"
 
 void mergeFunc(int arr[], int low, int mid, int high, int temp[]) {
-	
+
+	int i = low; // index for left subarray
+	int j = mid + 1; // index for right subarray
+	int k = 0; // index for temp array
+
+    while (i <= mid && j <= high)
+    {
+        if (arr[i] <= arr[j])
+        {
+            temp[k] = arr[i];
+            i++;
+            k++;
+        }
+        else
+        {
+            temp[k] = arr[j];
+            j++;
+            k++;
+        }
+    }
+
+    //While first half is not empty
+    //  Move next item from it to temp
+    while (i <= mid)
+    {
+        temp[k] = arr[i];
+        ++k;
+        ++i;
+    }
+
+    //While second half is not empty
+    //  Move next item from it to temp
+    while (j <= high)
+    {
+        temp[k] = arr[j];
+        ++k;
+        ++j;
+    }
+
+    //Copy indexes from low-high from temp back to arr
+    for (int i = low; i <= high; i++)
+    {
+        arr[i] = temp[i - low];
+    }
 }
 
 void mergeSortInternal(int arr[], int low, int high, int temp[]) {
+    // base case: 1 or fewer elements is sorted
+    if (low >= high)
+        return;
 
+    //Set mid to halfway between low and high
+    int mid = (high + low) / 2;
+    //Recursively sort first low to mid
+    mergeSortInternal(arr, low, mid, temp);
+    //Recursively sort second mid+1 to high
+    mergeSortInternal(arr, mid + 1, high, temp);
+    //Call mergeFunc to merge the two halves
+    mergeFunc(arr, low, mid, high, temp);
 }
 
 void mergeSort(int arr[], int arrSize) {
-
+    int* temp = new int[arrSize];
+    mergeSortInternal(arr, 0, arrSize - 1, temp);
+    delete[] temp;
 }
 
 int main()
 {
     std::cout << "Merge Sort\n";
 
+	int arr[] = { 5, 4, 3, 2, 1 };
+    std::cout << "Before: ";
+    for (int i: arr ) {
+        std::cout << i << ' ';
+    }
+    std::cout << '\n' << "After: ";
+	mergeSort(arr, 5);
+	for (int i : arr)
+	{
+				std::cout << i << ' ';
+	}
+	std::cout << '\n';
+	return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
